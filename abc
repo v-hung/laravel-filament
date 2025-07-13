@@ -1,0 +1,10 @@
+shop
+    orders
+    products
+    collections
+    stocks
+    shippingtypes
+
+content
+    post
+    blogs
