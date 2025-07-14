@@ -75,6 +75,11 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationGroups([
+                'Shop',
+                'Content',
+                'Filament Shield',
             ]);
     }
 }
