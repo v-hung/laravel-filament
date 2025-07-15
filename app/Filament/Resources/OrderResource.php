@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\OrderItemsRelationManager;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -29,14 +30,14 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user')
+                Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
                 Forms\Components\TextInput::make('total_price')
-                    ->numeric()
-                    ->readOnly(),
+                    ->numeric(),
+                // ->readOnly(),
                 Forms\Components\DateTimePicker::make('paid_at')
                     ->native(false),
                 Forms\Components\Select::make('status')
@@ -95,7 +96,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OrderItemsRelationManager::class
         ];
     }
 

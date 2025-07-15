@@ -25,7 +25,12 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                    ->required(),
             ]);
     }
 
@@ -33,7 +38,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                //
+                \Filament\Tables\Columns\TextColumn::make('name')
             ])
             ->filters([
                 //
