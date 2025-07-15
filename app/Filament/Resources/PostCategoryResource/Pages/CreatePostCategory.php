@@ -8,5 +8,15 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreatePostCategory extends CreateRecord
 {
+    use CreateRecord\Concerns\Translatable;
+
     protected static string $resource = PostCategoryResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\LocaleSwitcher::make(),
+            // ...
+        ];
+    }
 }

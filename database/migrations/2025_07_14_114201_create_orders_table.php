@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('total_price', 12, 2);
             $table->string('payment_method')->nullable(); // cod, paypal, etc.
             $table->timestamp('paid_at')->nullable();
-            $table->string('status')->default('pending'); // pending, paid, shipped, completed, canceled
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

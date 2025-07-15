@@ -2,19 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\Status;
+use App\Enums\CategoryStatus;
+use App\Enums\ContentStatus;
 use App\Filament\Resources\PostResource\Pages;
 use App\Models\Post;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Post::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
@@ -36,7 +41,11 @@ class PostResource extends Resource
                     }),
                 Forms\Components\TextInput::make('slug')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->rules(fn(string $locale) => [
+                        Rule::unique('posts', "slug->$locale")
+                            ->ignore(fn($record) => $record?->id),
+                    ]),
                 Forms\Components\Textarea::make('description')
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('images')
@@ -51,19 +60,26 @@ class PostResource extends Resource
                     ->required()
                     ->createOptionForm([
                         Forms\Components\TextInput::make('name')
+                            ->maxLength(255)
+                            ->required()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (Set $set, $state) {
+                                $set('slug', Str::slug($state));
+                            }),
+                        Forms\Components\TextInput::make('slug')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->label('Email address')
-                            ->email()
-                            ->required()
+                        Forms\Components\Textarea::make('description')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
-                            ->label('Phone number')
-                            ->tel()
-                            ->required(),
+                        Forms\Components\Select::make('status')
+                            ->options(CategoryStatus::class)
+                            ->default(CategoryStatus::Active)
+                            ->columnSpan('full'),
                     ]),
-                Forms\Components\Select::make('status')->options(Status::class)->columnSpan('full'),
+                Forms\Components\Select::make('status')
+                    ->options(ContentStatus::class)
+                    ->default(ContentStatus::Published)
+                    ->columnSpan('full'),
             ]);
     }
 

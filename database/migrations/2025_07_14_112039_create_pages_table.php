@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->json('title');
-            $table->string('slug')->unique();
+            $table->json('slug');
             $table->json('description')->nullable();
             $table->json('content')->nullable();
             $table->json('images')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

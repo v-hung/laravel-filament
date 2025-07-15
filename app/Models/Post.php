@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
-use App\Enums\Status;
+use App\Enums\ContentStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
+    use HasTranslations;
+
+    public array $translatable = [
+        'title',
+        'slug',
+        'description',
+    ];
+
     protected $casts = [
-        'status' => Status::class,
+        'status' => ContentStatus::class,
     ];
 
     public function categories(): BelongsToMany
