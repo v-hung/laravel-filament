@@ -36,8 +36,9 @@ class OrderResource extends Resource
                     ->preload()
                     ->required(),
                 Forms\Components\TextInput::make('total_price')
-                    ->numeric(),
-                // ->readOnly(),
+                    ->numeric()
+                    ->default(0)
+                    ->readOnly(),
                 Forms\Components\DateTimePicker::make('paid_at')
                     ->native(false),
                 Forms\Components\Select::make('status')
@@ -60,7 +61,7 @@ class OrderResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                \Filament\Tables\Columns\TextColumn::make('items_summary')
+                \Filament\Tables\Columns\TextColumn::make('items')
                     ->label('Products')
                     ->html()
                     ->formatStateUsing(function ($record) {
@@ -113,10 +114,17 @@ class OrderResource extends Resource
     {
         return [
             'all' => Order::make(),
-            'active' => Order::make()
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('active', true)),
-            'inactive' => Order::make()
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('active', false)),
+            ...collect(OrderStatus::cases())
+                ->mapWithKeys(function (OrderStatus $status) {
+                    return [
+                        $status->value => Order::make()
+                            ->modifyQueryUsing(
+                                fn(Builder $query) =>
+                                $query->where('status', $status->value)
+                            )
+                    ];
+                })
+                ->all(),
         ];
     }
 

@@ -17,6 +17,10 @@ class Product extends Model
         'description',
     ];
 
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(ProductCategory::class);

@@ -8,6 +8,6 @@ npm install & npm run build
 
 copy .env.example -> .env (edit)
 
-php artisan migrate --seed
+<!-- php artisan shield:super-admin -->
 
-php artisan shield:super-admin
+php artisan migrate --seed

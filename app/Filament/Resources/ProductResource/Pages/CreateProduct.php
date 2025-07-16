@@ -8,7 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateProduct extends CreateRecord
 {
-    use CreateRecord\Concerns\Translatable;
+    use CreateRecord\Concerns\Translatable {
+        updatedActiveLocale as translatableUpdateActiveLocale;
+    }
 
     protected static string $resource = ProductResource::class;
 
@@ -18,5 +20,11 @@ class CreateProduct extends CreateRecord
             Actions\LocaleSwitcher::make(),
             // ...
         ];
+    }
+
+    public function updatedActiveLocale(string $newActiveLocale): void
+    {
+        $this->translatableUpdateActiveLocale($newActiveLocale);
+        // $this->form->callAfterStateHydrated();
     }
 }

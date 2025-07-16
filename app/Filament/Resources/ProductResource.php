@@ -2,17 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProductStatus;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ProductResource extends Resource
 {
@@ -30,15 +35,38 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('slug')->unique(),
-                Forms\Components\Textarea::make('description')->nullable(),
-                Forms\Components\TextInput::make('price')->numeric(),
-                Forms\Components\TextInput::make('stock_quantity')->numeric(),
-                Forms\Components\Select::make('status')->options([
-                    'active' => 'Active',
-                    'inactive' => 'Inactive',
-                ]),
+                Forms\Components\TextInput::make('name')
+                    ->maxLength(255)
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $set('slug', Str::slug($state));
+                    }),
+                Forms\Components\TextInput::make('slug')
+                    ->required()
+                    ->maxLength(255)
+                    ->rules(fn(string $locale) => [
+                        Rule::unique('posts', "slug->$locale")
+                            ->ignore(fn($record) => $record?->id),
+                    ]),
+                Forms\Components\Textarea::make('description')
+                    ->label(fn($livewire) => 'Slug (' . $livewire->activeLocale . ')')
+                    ->maxLength(255),
+                Forms\Components\FileUpload::make('images')
+                    ->multiple(),
+                Forms\Components\RichEditor::make('content')
+                    ->columnSpan('full'),
+                Forms\Components\TextInput::make('price')
+                    ->numeric()
+                    ->default(0)
+                    ->readOnly(),
+                Forms\Components\TextInput::make('stock_quantity')
+                    ->numeric()
+                    ->default(1)
+                    ->readOnly(),
+                Forms\Components\Select::make('status')
+                    ->options(ProductStatus::class)
+                    ->default(ProductStatus::Active)
             ]);
     }
 
