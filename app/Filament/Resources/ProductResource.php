@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Helpers\Filament;
+use App\Helpers\Filament\FormHelper;
 
 class ProductResource extends Resource
 {
@@ -50,11 +52,13 @@ class ProductResource extends Resource
                             ->ignore(fn($record) => $record?->id),
                     ]),
                 Forms\Components\Textarea::make('description')
-                    ->label(fn($livewire) => 'Slug (' . $livewire->activeLocale . ')')
+                    ->label(FormHelper::localizedLabel("description"))
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('images')
+                    ->label(FormHelper::localizedLabel("images"))
                     ->multiple(),
                 Forms\Components\RichEditor::make('content')
+                    ->label(FormHelper::localizedLabel("content"))
                     ->columnSpan('full'),
                 Forms\Components\TextInput::make('price')
                     ->numeric()
@@ -66,7 +70,8 @@ class ProductResource extends Resource
                     ->readOnly(),
                 Forms\Components\Select::make('status')
                     ->options(ProductStatus::class)
-                    ->default(ProductStatus::Active)
+                    ->default(ProductStatus::Active),
+                // \Filament\Infolists\Components\ImageEntry::make('product_image')
             ]);
     }
 
