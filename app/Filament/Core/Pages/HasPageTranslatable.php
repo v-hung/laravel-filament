@@ -5,6 +5,7 @@ namespace App\Filament\Core\Pages;
 use App\Models\Setting;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property-read static $GROUP_KEY
@@ -21,7 +22,7 @@ trait HasPageTranslatable
 
     public function getGroupKey(): string
     {
-        return strtoupper(static::$GROUP_KEY);
+        return strtolower(static::$GROUP_KEY);
     }
 
     public function getTranslatableLocales(): array
@@ -110,6 +111,8 @@ trait HasPageTranslatable
                 ]);
             }
         }
+
+        Cache::forget("settings");
 
         Notification::make()
             ->success()

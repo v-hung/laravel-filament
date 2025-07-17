@@ -16,6 +16,10 @@
 
     - socialite
 
+## login
+
+    - Breeze or Jetstream
+
 ## router path
 
 | Tác vụ                      | Phương thức | URL Path                   |

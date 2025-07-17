@@ -6,21 +6,21 @@ use Illuminate\Support\Facades\Route;
 
 abstract class Controller
 {
-
     public array $shareData = [];
 
     protected function getShareData(): array
     {
-        $data = $shareData;
-        // $traits = class_uses_recursive(static::class);
+        $data = $this->shareData;
+        $traits = class_uses_recursive(static::class);
 
-        // foreach ($traits as $trait) {
-        //     $method = 'shareData' . class_basename($trait);
+        foreach ($traits as $trait) {
+            $base = class_basename($trait);
+            $method = strtolower($base) . 'Data';
 
-        //     if (method_exists($this, $method)) {
-        //         $shared = array_merge($shared, $this->$method());
-        //     }
-        // }
+            if (method_exists($this, $method)) {
+                $data = array_merge($data, $this->$method());
+            }
+        }
 
         return $data;
     }
@@ -33,15 +33,12 @@ abstract class Controller
             abort(500, 'Cannot determine the current controller action.');
         }
 
-        // App\Http\Controllers\Site\HomeController@index
         [$controller, $method] = explode('@', $action);
 
-        // Xử lý path controller → view name
         $viewPath = str_replace('App\\Http\\Controllers\\', '', $controller);
         $viewPath = str_replace('Controller', '', $viewPath);
-        $viewPath = str_replace('\\', '.', $viewPath); // Site\Home → site.home
+        $viewPath = str_replace('\\', '.', $viewPath);
 
-        // Đảm bảo prefix 'pages.' và lowercase toàn bộ
         $viewName = 'pages.' . strtolower($viewPath . '.' . $method);
 
         if (!view()->exists($viewName)) {
@@ -53,5 +50,8 @@ abstract class Controller
         return view($viewName, $data, $mergeData);
     }
 
-    protected function share($)
+    protected function share($key, $value)
+    {
+        $this->shareData = array_merge($this->shareData, [$key, $value]);
+    }
 }

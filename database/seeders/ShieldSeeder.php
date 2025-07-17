@@ -16,7 +16,7 @@ class ShieldSeeder extends Seeder
 
         $rolesWithPermissions = '[{"name":"super_admin","guard_name":"web","permissions":["view_role","view_any_role","create_role","update_role","delete_role","delete_any_role"]}]';
         $directPermissions = '[]';
-        $userJson = '[{"name":"Super Admin","email":"admin@admin.com","password":"Admin123!","role":"super_admin"}]';
+        $userJson = '[{"name":"Super Admin","email":"admin@admin.com","password":"Admin123!","role":"super_admin", "is_admin": true}]';
 
         static::makeRolesWithPermissions($rolesWithPermissions);
         static::makeDirectPermissions($directPermissions);
