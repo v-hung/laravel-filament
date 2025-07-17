@@ -16,13 +16,7 @@ enum ProductStatus: string implements HasColor, HasLabel, HasDescription
 
     public function getLabel(): ?string
     {
-        return match ($this) {
-            self::Active => 'Active',
-            self::Inactive => 'Inactive',
-            self::OutOfStock => 'Out of Stock',
-            self::ComingSoon => 'Coming Soon',
-            self::Discontinued => 'Discontinued',
-        };
+        return $this->name;
     }
 
     public function getDescription(): ?string

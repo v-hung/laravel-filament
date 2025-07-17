@@ -10,4 +10,25 @@
 
 ## lấy danh sách tỉnh thành
 
-    -   https://addresskit.cas.so/ hoặc https://provinces.open-api.vn/
+    - https://addresskit.cas.so/ hoặc https://provinces.open-api.vn/
+
+## đăng nhập oauth2 (google, facebook)
+
+    - socialite
+
+## router path
+
+| Tác vụ                      | Phương thức | URL Path                   |
+| --------------------------- | ----------- | -------------------------- |
+| Xem giỏ hàng                | GET         | `/cart`                    |
+| Thêm vào giỏ hàng           | POST        | `/cart/items`              |
+| Cập nhật số lượng           | PUT         | `/cart/items/{item_id}`    |
+| Xóa sản phẩm khỏi giỏ       | DELETE      | `/cart/items/{item_id}`    |
+| Bắt đầu checkout            | GET         | `/checkout`                |
+| Chọn địa chỉ giao hàng      | POST        | `/checkout/address`        |
+| Chọn phương thức thanh toán | POST        | `/checkout/payment-method` |
+| Đặt hàng                    | POST        | `/orders`                  |
+| Xem đơn đã đặt              | GET         | `/orders`                  |
+| Xem chi tiết đơn hàng       | GET         | `/orders/{order_id}`       |
+| Thanh toán VNPay            | POST        | `/payment/vnpay/redirect`  |
+| Callback thanh toán         | GET         | `/payment/vnpay/callback`  |

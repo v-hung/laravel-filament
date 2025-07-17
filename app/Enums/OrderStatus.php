@@ -16,13 +16,7 @@ enum OrderStatus: string implements HasColor, HasLabel, HasDescription
 
     public function getLabel(): ?string
     {
-        return match ($this) {
-            self::Pending => 'Pending',
-            self::Paid => 'Paid',
-            self::Shipped => 'Shipped',
-            self::Completed => 'Completed',
-            self::Canceled => 'Canceled',
-        };
+        return $this->name;
     }
 
     public function getDescription(): ?string
