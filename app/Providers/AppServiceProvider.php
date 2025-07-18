@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\SettingRepository;
 use App\View\Composers\SettingComposer;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
             $switch->locales(['vi', 'en']); // also accepts a closure
         });
 
-        SettingComposer::compose();
+        app()->instance('settings', (new SettingRepository)->getAll());
     }
 }
