@@ -3,6 +3,28 @@
 @tailwind utilities;
 @tailwind variants;
 
-[x-cloak] {
-    display: none !important;
+@layer base {
+    [x-cloak] {
+        display: none !important;
+    }
+
+    html {
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
+            Liberation Mono, monospace !important;
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+
+@layer components {
+    /* .container {
+        w
+    } */
 }

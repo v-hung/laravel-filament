@@ -2,7 +2,6 @@
 
 @section('content')
     <p>This is my body content.</p>
-    <livewire:counter />
 
     <button onclick="handelClick()">sdfsdf</button>
 @endsection
