@@ -6,7 +6,7 @@
     <div x-show="open" class="fixed right-0 top-0 w-80 h-full bg-white shadow-lg p-4">
        <div class="fixed top-0 right-0 w-80 h-full bg-white shadow-lg p-4 z-50">
             <h2 class="text-lg font-bold">Giỏ hàng</h2>
-            <button wire:click="toggleDrawer">Đóng</button>
+            <button @click="open = false">Đóng</button>
 
             <div class="mt-4 space-y-2">
                 @forelse ($cartItems as $item)

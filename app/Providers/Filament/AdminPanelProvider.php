@@ -80,6 +80,7 @@ class AdminPanelProvider extends PanelProvider
                 'Shop',
                 'Content',
                 'Filament Shield',
-            ]);
+            ])
+            ->viteTheme('resources/css/filament/admin/theme.css', 'build/filament');
     }
 }

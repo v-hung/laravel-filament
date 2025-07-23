@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Cart;
 
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
-class CartWidget extends Component
+class IconWidget extends Component
 {
     public $cartItems = [];
 
@@ -19,9 +18,14 @@ class CartWidget extends Component
     {
         return count($this->cartItems);
     }
-
     public function render()
     {
-        return view('livewire.cart-widget');
+        return view('livewire.cart.icon-widget');
     }
+}
+
+trait InteractsWithCart
+{
+    public function addToCart($productId) { ... }
+    public function removeFromCart($productId) { ... }
 }

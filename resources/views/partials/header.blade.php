@@ -1,44 +1,38 @@
-<header>
-    <div class="container mx-auto">
-        <div class="header-content">
-            <div class="header-logo">
-                <img src="" alt="">
-            </div>
-            <div class="main-menu">
-                <ul class="list-menu">
-                    <li class="menu-item">
-                        <a href="">item</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="header-icon">
-                <div class="icon-account"></div>
-                <div class="icon-wishlish"></div>
-                <div class="icon-cart"></div>
-                <div class="icon-language"></div>
-            </div>
+<header class="bg-white shadow">
+    <div class="page-container py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+            <img src="" alt="Logo" class="h-10 w-auto" loading="lazy">
+        </div>
+
+        <!-- Menu -->
+        <nav class="hidden md:flex space-x-6">
+            <a href="#" class="text-gray-700 hover:text-blue-600 transition">Item</a>
+            <!-- Thêm các menu item khác tại đây nếu cần -->
+        </nav>
+
+        <!-- Icons -->
+        <div class="flex items-center space-x-4">
+            <!-- Account icon -->
+            <a href="@auth {{ route('profile') }} @else {{ route('login') }} @endauth"
+               class="text-gray-700 hover:text-blue-600 transition">
+                <x-heroicon-o-user class="w-6 h-6" />
+            </a>
+
+            <!-- Wishlist -->
+            <a href="#" class="text-gray-700 hover:text-red-500 transition">
+                <x-heroicon-o-heart class="w-6 h-6" />
+            </a>
+
+            <!-- Cart -->
+            <a href="#" class="text-gray-700 hover:text-green-500 transition">
+                <x-heroicon-o-shopping-cart class="w-6 h-6" />
+            </a>
+
+            <!-- Language -->
+            <a href="#" class="text-gray-700 hover:text-blue-500 transition">
+                <x-heroicon-o-globe-alt class="w-6 h-6" />
+            </a>
         </div>
     </div>
-    @if (Route::has('login'))
-        <nav class="flex items-center justify-end gap-4">
-            @auth
-                <a href="{{ url('/dashboard') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                    Dashboard
-                </a>
-            @else
-                <a href="{{ route('login') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal">
-                    Log in
-                </a>
-
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}"
-                        class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                        Register
-                    </a>
-                @endif
-            @endauth
-        </nav>
-    @endif
 </header>

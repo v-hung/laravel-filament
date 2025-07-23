@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified.optional'])->name('dashboard');
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware(['auth', 'verified'])->name('profile');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,7 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 //     Route::get('{slug}', [ProductController::class, 'show'])->name('show');
 // });
 
-// Route::prefix('cart')->name('cart.')->group(function () {
+// Route::middleware(['auth', 'verified.optional'])->group(function () {
 //     Route::get('/', [CartController::class, 'index'])->name('index');
 //     Route::post('add/{id}', [CartController::class, 'add'])->name('add');
 //     Route::delete('remove/{id}', [CartController::class, 'remove'])->name('remove');
