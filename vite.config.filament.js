@@ -8,9 +8,10 @@ export default defineConfig({
         laravel({
             input: ["resources/css/filament/admin/theme.css"],
             refresh: [
-                ...refreshPaths,
-                "app/Filament/**",
-                "app/Providers/Filament/**",
+                // ...refreshPaths,
+                "./app/Filament/**/*.php",
+                "./resources/views/filament/**/*.blade.php",
+                "./vendor/filament/**/*.blade.php",
             ],
         }),
     ],

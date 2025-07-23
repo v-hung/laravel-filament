@@ -15,7 +15,7 @@
         <div class="flex items-center space-x-4">
             <!-- Account icon -->
             <a href="@auth {{ route('profile') }} @else {{ route('login') }} @endauth"
-               class="text-gray-700 hover:text-blue-600 transition">
+                class="text-gray-700 hover:text-blue-600 transition">
                 <x-heroicon-o-user class="w-6 h-6" />
             </a>
 
